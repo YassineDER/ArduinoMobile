@@ -12,6 +12,7 @@ const MQTT_SERVICE_OPTIONS : IMqttServiceOptions = {
   hostname: '141.145.203.36',
   port: 9001,
   clean: true,
+  protocol: 'ws',
   clientId: 'arduino-mobile-app',
   username: 'ev3',
   password: 'omelette',
