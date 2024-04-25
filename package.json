@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && mv dist/browser/* dist/ && rm -d dist/browser/ && npx cap sync",
+    "build": "ng build",
     "test": "ng test"
   },
   "private": true,
@@ -17,9 +17,12 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
-    "@capacitor/android": "^6.0.0",
-    "@capacitor/cli": "^6.0.0",
-    "@capacitor/core": "^6.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^16.0.0",
+    "@popperjs/core": "^2.11.8",
+    "@swimlane/ngx-charts": "^20.5.0",
+    "bootstrap": "^5.3.2",
+    "bootstrap-icons": "^1.11.3",
+    "ngx-mqtt": "^17.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
@@ -28,6 +31,7 @@
     "@angular-devkit/build-angular": "^17.3.4",
     "@angular/cli": "^17.3.4",
     "@angular/compiler-cli": "^17.3.0",
+    "@angular/localize": "^17.3.0",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",

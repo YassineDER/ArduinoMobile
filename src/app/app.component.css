@@ -1,0 +1,11 @@
+.card h1{
+    font-size: 2.7rem;
+}
+
+i{
+    font-size: 3rem !important;
+}
+
+button{
+    border-radius: 0;
+}
