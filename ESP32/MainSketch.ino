@@ -1,3 +1,4 @@
+#include <MainSketchSecrets.h>
 #include <Wire.h>
 #include <U8x8lib.h>
 #include <SparkFunHTU21D.h>
@@ -5,19 +6,16 @@
 #include <BH1750.h>
 #include <ArduinoMqttClient.h>
 
-U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8(15, 4, 16);
-BH1750 lightMeter;
-
-const char *ssid = "It hertz when IP";
-const char *pass = "culdevache";
-const char *broker = "141.145.203.36";
-const int port = 1883;
 const char *GENERAL = "arduino/network";
 const char *DEBUG = "arduino/debug";
+
+U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8(15, 4, 16);
+BH1750 lightMeter;
 HTU21D myTempHumi;
 WiFiClient client;
 MqttClient mqtt(client);
 
+// This function is called once at start up
 void setup()
 {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -29,11 +27,11 @@ void setup()
   lightMeter.begin();
 
   WiFi.disconnect(true);
-  char out[50 + strlen(ssid)];
-  sprintf(out, "Connecting to %s", ssid);
+  char out[50 + strlen(WIFI_SSID)];
+  sprintf(out, "Connecting to %s", WIFI_SSID);
   show(out);
 
-  WiFi.begin(ssid, pass);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
   delay(500);
   while (WiFi.status() != WL_CONNECTED)
     delay(750);
@@ -42,12 +40,13 @@ void setup()
   connectToMqtt();
 }
 
+// This function is called repeatedly
 void loop()
 {
   if (WiFi.status() != WL_CONNECTED)
   {
     show("Wifi lost. Reconnecting");
-    WiFi.begin(ssid, pass);
+    WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     delay(1500);
     return;
   }
@@ -75,6 +74,8 @@ void loop()
   delay(1500);
 }
 
+
+// This function is used to publish a message to the MQTT broker based on the topic provided
 void publish(const char *message, const char *topic)
 {
   mqtt.beginMessage(topic);
@@ -82,12 +83,14 @@ void publish(const char *message, const char *topic)
   mqtt.endMessage();
 }
 
+
+// This function connects to the MQTT broker and subscribes to the topics
 void connectToMqtt()
 {
   mqtt.setId("esp32");
-  mqtt.setUsernamePassword("ev3", "omelette");
+  mqtt.setUsernamePassword(MQTT_USERNAME, MQTT_PASSWORD);
 
-  while (!mqtt.connect(broker, port))
+  while (!mqtt.connect(MQTT_BROKER, MQTT_PORT))
   {
     show("MQTT error");
     delay(2500);
@@ -99,8 +102,12 @@ void connectToMqtt()
   publish("Connected and subscribed to MQTT", DEBUG);
 }
 
-/* void onMqttMessage(int messageSize)
+
+
+// This function is not used in this sketch, but it's a good example of how to handle incoming MQTT messages
+void onMqttMessage(int messageSize)
 {
+  // Light up the LED based on the message received (ON or OFF)
   char msg[6];
   int i = 0;
   while (mqtt.available() && i < 5){
@@ -113,8 +120,10 @@ void connectToMqtt()
     digitalWrite(LED_BUILTIN, HIGH);
   else if (strcmp(msg, "OFF") == 0)
     digitalWrite(LED_BUILTIN, LOW);
-} */
+}
 
+
+// This function is used to display a message on the OLED display
 void show(const char *message)
 {
   u8x8.clear();
