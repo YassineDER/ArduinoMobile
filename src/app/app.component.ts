@@ -25,7 +25,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
     constructor(private MQTT: MqttService, private notif: NotificationService) {
-        window.addEventListener('beforeunload', (e) => this.MQTT.disconnect());
         this.innerWidth = window.innerWidth - 20;
         Object.assign(this, { ESPData, SeriesData });
     }
