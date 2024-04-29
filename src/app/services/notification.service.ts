@@ -4,28 +4,34 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class NotificationService {
-  granted: boolean = false;
+  public granted: boolean = Notification.permission !== 'denied';
 
-  constructor() { }
+  constructor() {
+    
+   }
 
   // Check if the browser supports notifications and request permission if needed
-  requestPermission(): boolean {
-    if ('Notification' in window) 
-      Notification.requestPermission().then(permission => this.granted = permission === 'granted');
-    
-    return this.granted;
+  requestPermission() {
+    if (!('Notification' in window))
+      alert('This browser does not support desktop notification');
+    else if (Notification.permission !== 'denied') {
+      Notification.requestPermission().then((perm) => {
+        if (perm === 'granted')
+          this.granted = true;
+      });
+    }
   }
 
   // Send a notification if the condition is met
-  sendNotification(temp: number): void {
-    if (this.granted) {
-      const notification = new Notification('High Temperature Alert!', {
-        body: `The current temperature is ${temp}°C, which is extremely high.`,
-        icon: '/assets/danger.png'
+  sendNotification(temp: number) {
+    if (!this.granted) return alert('Please enable notifications to receive alerts.');
+    // const notification = new Notification('High Temperature Alert!', {
+    //   body: `The current temperature is ${temp}°C, which is extremely high.`,
+    // });
+    navigator.serviceWorker.ready.then((registration) => {
+      registration.showNotification('High Temperature Alert!', {
+        body: `The current temperature is ${temp}°C, which is extremely high.`
       });
-      notification.onclick = () => window.focus();
-    } else {
-      console.log('No permission to send notifications.');
-    }
+    });  
   }
 }

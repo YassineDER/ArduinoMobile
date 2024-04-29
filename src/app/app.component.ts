@@ -11,8 +11,7 @@ import { NotificationService } from './services/notification.service';
 export class AppComponent implements OnInit, OnDestroy {
     on = false;
     current = new Date();
-    granted = false;
-    innerWidth: number;
+    innerWidth: number = window.innerWidth - 40;
     data: ESPData[] = [];
     lastUpdate = { temp: 0, humi: 0, lum: null };
     public setting = '';
@@ -24,8 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
     timeline: boolean = true;
 
 
-    constructor(private MQTT: MqttService, private notif: NotificationService) {
-        this.innerWidth = window.innerWidth - 20;
+    constructor(private MQTT: MqttService, public notif: NotificationService) {
         Object.assign(this, { ESPData, SeriesData });
     }
 
@@ -41,7 +39,7 @@ export class AppComponent implements OnInit, OnDestroy {
             this.lastUpdate.lum = json.lux;
             this.updateSetting(json.lux);
             this.data = [...this.data];
-            if (json.temp > 45) this.notif.sendNotification(json.temp);
+            if (json.temp > 45.0) this.notif.sendNotification(json.temp);
         });
 
     }
@@ -70,7 +68,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     test() {
-        this.granted = this.notif.requestPermission();
+        this.notif.requestPermission();
     }
 
     updateSetting(lux: number) {

@@ -1,5 +1,5 @@
-#define WIFI_SSID "moto e13"
-#define WIFI_PASSWORD "56v4asdf4246x77"
+#define WIFI_SSID "ssid"
+#define WIFI_PASSWORD "pass"
 
 #define MQTT_BROKER "yassine.onthewifi.com"
 #define MQTT_PORT 1883

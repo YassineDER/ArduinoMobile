@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "Building the app..."
+ng build --base-href /ArduinoMobile/
+
+echo "Deploying to GitHub Pages..."
+ngh --dir=dist/browser
+
+echo "Deployment complete."

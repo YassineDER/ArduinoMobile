@@ -55,7 +55,7 @@
       [results]="data">
     </ngx-charts-line-chart> 
 
-    @if (!granted) {
+    @if (!notif.granted) {
       <div class="w-100 text-center">
         <button (click)="test()" class=" btn mx-auto btn-secondary" type="button">Enable temperature alerts</button>
       </div>
