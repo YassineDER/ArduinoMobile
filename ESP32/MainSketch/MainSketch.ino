@@ -1,4 +1,4 @@
-#include <MainSketchSecrets.h>
+#include <MainSketch.h>
 #include <Wire.h>
 #include <U8x8lib.h>
 #include <SparkFunHTU21D.h>

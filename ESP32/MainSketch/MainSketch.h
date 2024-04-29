@@ -2,8 +2,8 @@
 #define MAIN_SKETCH_SECRETS_H
 
 // WiFi credentials
-const char* WIFI_SSID = "your_wifi_ssid";
-const char* WIFI_PASSWORD = "your_wifi_password";
+const char* WIFI_SSID = "moto e13";
+const char* WIFI_PASSWORD = "56v4asdf4246x77";
 
 // MQTT broker authentication
 const char* MQTT_BROKER = "yassine.onthewifi.com";
